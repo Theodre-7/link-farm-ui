@@ -22,7 +22,7 @@ const mockCrops: Crop[] = [
   {
     id: '1',
     name: 'Fresh Tomatoes',
-    image: '/placeholder.svg?height=300&width=400',
+    image: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400&h=300&fit=crop',
     price: 3.50,
     unit: 'kg',
     location: 'California Valley',
@@ -32,7 +32,7 @@ const mockCrops: Crop[] = [
   {
     id: '2',
     name: 'Organic Carrots',
-    image: '/placeholder.svg?height=300&width=400',
+    image: 'https://images.unsplash.com/photo-1445282768818-728615cc910a?w=400&h=300&fit=crop',
     price: 2.25,
     unit: 'kg',
     location: 'Oregon Fields',
@@ -42,7 +42,7 @@ const mockCrops: Crop[] = [
   {
     id: '3',
     name: 'Sweet Corn',
-    image: '/placeholder.svg?height=300&width=400',
+    image: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=400&h=300&fit=crop',
     price: 4.00,
     unit: 'dozen',
     location: 'Iowa Plains',
@@ -52,7 +52,7 @@ const mockCrops: Crop[] = [
   {
     id: '4',
     name: 'Bell Peppers',
-    image: '/placeholder.svg?height=300&width=400',
+    image: 'https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=400&h=300&fit=crop',
     price: 5.75,
     unit: 'kg',
     location: 'Florida Groves',
@@ -62,7 +62,7 @@ const mockCrops: Crop[] = [
   {
     id: '5',
     name: 'Fresh Lettuce',
-    image: '/placeholder.svg?height=300&width=400',
+    image: 'https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?w=400&h=300&fit=crop',
     price: 1.80,
     unit: 'head',
     location: 'Arizona Desert',
@@ -72,7 +72,7 @@ const mockCrops: Crop[] = [
   {
     id: '6',
     name: 'Red Onions',
-    image: '/placeholder.svg?height=300&width=400',
+    image: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400&h=300&fit=crop',
     price: 2.90,
     unit: 'kg',
     location: 'Texas Ranch',
@@ -92,6 +92,7 @@ const BuyerHome = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('animate-fade-up', 'animate-scale-in');
+            entry.target.classList.remove('opacity-0', 'translate-y-8');
           }
         });
       },
@@ -99,7 +100,9 @@ const BuyerHome = () => {
     );
 
     cardRefs.current.forEach((card) => {
-      if (card) observer.observe(card);
+      if (card) {
+        observer.observe(card);
+      }
     });
 
     return () => observer.disconnect();
@@ -107,7 +110,8 @@ const BuyerHome = () => {
 
   const filteredCrops = mockCrops.filter(crop =>
     crop.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    crop.location.toLowerCase().includes(searchQuery.toLowerCase())
+    crop.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    crop.farmer.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -155,77 +159,86 @@ const BuyerHome = () => {
 
       {/* Crop Grid */}
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredCrops.map((crop, index) => (
-            <div
-              key={crop.id}
-              ref={(el) => (cardRefs.current[index] = el)}
-              className="opacity-0 transform translate-y-8"
-            >
-              <Card className="bg-white border border-agri-blue/20 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden group">
-                <div className="relative overflow-hidden">
-                  <img 
-                    src={crop.image} 
-                    alt={crop.name}
-                    className="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </div>
-                
-                <CardContent className="p-6">
-                  <h3 className="font-bold text-xl text-agri-brown mb-2">{crop.name}</h3>
-                  
-                  <div className="flex items-center gap-2 text-gray-600 mb-3">
-                    <MapPin className="w-4 h-4" />
-                    <span className="text-sm">{crop.location}</span>
+        {filteredCrops.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredCrops.map((crop, index) => (
+              <div
+                key={crop.id}
+                ref={(el) => (cardRefs.current[index] = el)}
+                className="opacity-0 transform translate-y-8 transition-all duration-500"
+              >
+                <Card className="bg-white border border-agri-blue/20 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden group">
+                  <div className="relative overflow-hidden">
+                    <img 
+                      src={crop.image} 
+                      alt={crop.name}
+                      className="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
                   
-                  <div className="flex items-center gap-2 text-agri-green mb-3">
-                    <DollarSign className="w-5 h-5" />
-                    <span className="font-bold text-lg">${crop.price}</span>
-                    <span className="text-sm text-gray-600">/{crop.unit}</span>
-                  </div>
-                  
-                  <p className="text-sm text-gray-600 mb-4">
-                    {crop.quantity} {crop.unit} available from {crop.farmer}
-                  </p>
-                  
-                  <div className="flex gap-3">
-                    <Link to={`/crop/${crop.id}`} className="flex-1">
-                      <Button 
-                        variant="outline" 
-                        className="w-full border-agri-green text-agri-green hover:bg-agri-green hover:text-white transition-all duration-300"
-                      >
-                        View Details
-                      </Button>
-                    </Link>
+                  <CardContent className="p-6">
+                    <h3 className="font-bold text-xl text-agri-brown mb-2">{crop.name}</h3>
                     
-                    <Button 
-                      className={cn(
-                        "flex-1 bg-agri-green hover:bg-agri-green/90 text-white",
-                        "relative overflow-hidden transition-all duration-300",
-                        "hover:shadow-lg hover:shadow-agri-green/30",
-                        "active:scale-95"
-                      )}
-                    >
-                      <span className="flex items-center gap-2 relative z-10">
-                        <ShoppingCart className="w-4 h-4" />
-                        Buy Now
-                      </span>
+                    <div className="flex items-center gap-2 text-gray-600 mb-3">
+                      <MapPin className="w-4 h-4" />
+                      <span className="text-sm">{crop.location}</span>
+                    </div>
+                    
+                    <div className="flex items-center gap-2 text-agri-green mb-3">
+                      <DollarSign className="w-5 h-5" />
+                      <span className="font-bold text-lg">${crop.price}</span>
+                      <span className="text-sm text-gray-600">/{crop.unit}</span>
+                    </div>
+                    
+                    <p className="text-sm text-gray-600 mb-4">
+                      {crop.quantity} {crop.unit} available from {crop.farmer}
+                    </p>
+                    
+                    <div className="flex gap-3">
+                      <Link to={`/crop/${crop.id}`} className="flex-1">
+                        <Button 
+                          variant="outline" 
+                          className="w-full border-agri-green text-agri-green hover:bg-agri-green hover:text-white transition-all duration-300 min-h-[44px]"
+                        >
+                          View Details
+                        </Button>
+                      </Link>
                       
-                      {/* Pulse animation */}
-                      <div className="absolute inset-0 bg-white/20 rounded-full scale-0 group-hover:scale-150 transition-transform duration-500" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          ))}
-        </div>
-        
-        {filteredCrops.length === 0 && (
+                      <Button 
+                        className={cn(
+                          "flex-1 bg-agri-green hover:bg-agri-green/90 text-white min-h-[44px]",
+                          "relative overflow-hidden transition-all duration-300",
+                          "hover:shadow-lg hover:shadow-agri-green/30",
+                          "active:scale-95 animate-pulse"
+                        )}
+                      >
+                        <span className="flex items-center gap-2 relative z-10">
+                          <ShoppingCart className="w-4 h-4" />
+                          Buy Now
+                        </span>
+                        
+                        {/* Pulse animation */}
+                        <div className="absolute inset-0 bg-white/20 rounded-full scale-0 group-hover:scale-150 transition-transform duration-500" />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            ))}
+          </div>
+        ) : (
           <div className="text-center py-16">
-            <p className="text-gray-500 text-lg">No crops found matching your search.</p>
+            <div className="text-gray-400 mb-4">
+              <Search className="w-16 h-16 mx-auto mb-4" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-600 mb-2">No crops found</h3>
+            <p className="text-gray-500">
+              {searchQuery 
+                ? `No crops match your search for "${searchQuery}"`
+                : "No crops are currently available in the marketplace"
+              }
+            </p>
           </div>
         )}
       </div>

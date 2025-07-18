@@ -9,8 +9,11 @@ import RoleSelection from "./pages/RoleSelection";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
+import Messages from "./pages/Messages";
 import FarmerDashboard from "./pages/farmer/FarmerDashboard";
+import FarmerProfile from "./pages/farmer/FarmerProfile";
 import BuyerHome from "./pages/buyer/BuyerHome";
+import BuyerProfile from "./pages/buyer/BuyerProfile";
 import CropDetail from "./pages/buyer/CropDetail";
 
 const queryClient = new QueryClient();
@@ -26,8 +29,11 @@ const App = () => (
           <Route path="/role" element={<RoleSelection />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/messages" element={<Messages />} />
           <Route path="/farmer/*" element={<FarmerDashboard />} />
+          <Route path="/farmer/profile" element={<FarmerProfile />} />
           <Route path="/buyer/home" element={<BuyerHome />} />
+          <Route path="/buyer/profile" element={<BuyerProfile />} />
           <Route path="/crop/:id" element={<CropDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
