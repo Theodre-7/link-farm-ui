@@ -10,6 +10,8 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
 import FarmerDashboard from "./pages/farmer/FarmerDashboard";
+import BuyerHome from "./pages/buyer/BuyerHome";
+import CropDetail from "./pages/buyer/CropDetail";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +27,8 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/farmer/*" element={<FarmerDashboard />} />
+          <Route path="/buyer/home" element={<BuyerHome />} />
+          <Route path="/crop/:id" element={<CropDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
