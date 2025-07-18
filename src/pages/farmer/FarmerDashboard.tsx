@@ -5,6 +5,7 @@ import FarmerHome from './FarmerHome';
 import FarmerTools from './FarmerTools';
 import FarmerMessages from './FarmerMessages';
 import FarmerProfile from './FarmerProfile';
+import FarmerAddCrop from './FarmerAddCrop';
 import BottomNavigation from '@/components/BottomNavigation';
 
 const FarmerDashboard = () => {
@@ -16,6 +17,7 @@ const FarmerDashboard = () => {
           <Route path="/tools" element={<FarmerTools />} />
           <Route path="/messages" element={<FarmerMessages />} />
           <Route path="/profile" element={<FarmerProfile />} />
+          <Route path="/add-crop" element={<FarmerAddCrop />} />
           <Route path="/" element={<FarmerHome />} />
         </Routes>
       </div>
