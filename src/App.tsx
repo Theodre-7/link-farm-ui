@@ -14,6 +14,7 @@ import FarmerDashboard from "./pages/farmer/FarmerDashboard";
 import FarmerProfile from "./pages/farmer/FarmerProfile";
 import BuyerHome from "./pages/buyer/BuyerHome";
 import BuyerProfile from "./pages/buyer/BuyerProfile";
+import BuyerAssistant from "./pages/buyer/BuyerAssistant";
 import CropDetail from "./pages/buyer/CropDetail";
 import Checkout from "./pages/Checkout";
 
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/farmer/profile" element={<FarmerProfile />} />
           <Route path="/buyer/home" element={<BuyerHome />} />
           <Route path="/buyer/profile" element={<BuyerProfile />} />
+          <Route path="/buyer/assistant" element={<BuyerAssistant />} />
           <Route path="/crop/:id" element={<CropDetail />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="*" element={<NotFound />} />

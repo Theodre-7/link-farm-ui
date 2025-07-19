@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Home, Search, MessageCircle, User } from 'lucide-react';
+import { Home, Bot, MessageCircle, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const BuyerBottomNavigation = () => {
@@ -9,7 +9,7 @@ const BuyerBottomNavigation = () => {
   
   const navItems = [
     { icon: Home, label: 'Home', path: '/buyer/home' },
-    { icon: Search, label: 'Search', path: '/buyer/search' },
+    { icon: Bot, label: 'Assistant', path: '/buyer/assistant' },
     { icon: MessageCircle, label: 'Messages', path: '/messages' },
     { icon: User, label: 'Profile', path: '/buyer/profile' }
   ];
