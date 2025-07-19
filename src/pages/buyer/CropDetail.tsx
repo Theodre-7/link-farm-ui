@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, MapPin, DollarSign, Package, User, Phone, Mail, MessageCircle, ShoppingCart, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -35,10 +34,9 @@ const mockCropData: CropData = {
   id: '1',
   name: 'Premium Fresh Tomatoes',
   images: [
-    '/placeholder.svg?height=500&width=700',
-    '/placeholder.svg?height=500&width=700',
-    '/placeholder.svg?height=500&width=700',
-    '/placeholder.svg?height=500&width=700'
+    'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=700&h=500&fit=crop',
+    'https://images.unsplash.com/photo-1546470427-e5dd2052e18b?w=700&h=500&fit=crop',
+    'https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?w=700&h=500&fit=crop'
   ],
   price: 3.50,
   unit: 'kg',
@@ -51,7 +49,7 @@ const mockCropData: CropData = {
     totalSales: 250,
     phone: '+1 (555) 123-4567',
     email: 'john@smithfarm.com',
-    avatar: '/placeholder.svg?height=100&width=100',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',
     verified: true
   },
   category: 'Vegetables',
@@ -61,6 +59,7 @@ const mockCropData: CropData = {
 
 const CropDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isContactAnimating, setIsContactAnimating] = useState(false);
   const [isBuyAnimating, setIsBuyAnimating] = useState(false);
@@ -75,8 +74,10 @@ const CropDetail = () => {
 
   const handleBuyNow = () => {
     setIsBuyAnimating(true);
-    setTimeout(() => setIsBuyAnimating(false), 600);
-    // Add buy logic here
+    setTimeout(() => {
+      setIsBuyAnimating(false);
+      navigate(`/checkout?item=${id}`);
+    }, 300);
   };
 
   return (
@@ -161,7 +162,7 @@ const CropDetail = () => {
                     <DollarSign className="w-6 h-6 text-agri-green" />
                     <div>
                       <p className="text-sm text-gray-600">Price per {crop.unit}</p>
-                      <p className="text-2xl font-bold text-agri-green">${crop.price}</p>
+                      <p className="text-2xl font-bold text-agri-green">₹{crop.price}</p>
                     </div>
                   </div>
                   
@@ -189,7 +190,7 @@ const CropDetail = () => {
                 onClick={handleContactFarmer}
                 variant="outline"
                 className={cn(
-                  "flex-1 border-agri-brown text-agri-brown hover:bg-agri-brown hover:text-white",
+                  "flex-1 border-agri-brown text-agri-brown hover:bg-agri-brown hover:text-white min-h-[64px]",
                   "transition-all duration-300 hover:shadow-lg",
                   isContactAnimating && "animate-ripple"
                 )}
@@ -204,9 +205,9 @@ const CropDetail = () => {
               <Button
                 onClick={handleBuyNow}
                 className={cn(
-                  "flex-1 bg-agri-green hover:bg-agri-green/90 text-white",
+                  "flex-1 bg-agri-green hover:bg-agri-green/90 text-white min-h-[64px]",
                   "transition-all duration-300 hover:shadow-lg hover:shadow-agri-green/30",
-                  "relative overflow-hidden",
+                  "relative overflow-hidden ripple-effect",
                   isBuyAnimating && "animate-pulse"
                 )}
               >
@@ -215,11 +216,6 @@ const CropDetail = () => {
                   isBuyAnimating && "rotate-12 scale-110"
                 )} />
                 Buy Now
-                
-                {/* Ripple effect */}
-                {isBuyAnimating && (
-                  <div className="absolute inset-0 bg-white/20 animate-ripple" />
-                )}
               </Button>
             </div>
           </div>

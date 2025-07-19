@@ -1,24 +1,24 @@
 
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Home, Wrench, MessageCircle, User } from 'lucide-react';
+import { Home, Search, MessageCircle, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const BottomNavigation = () => {
+const BuyerBottomNavigation = () => {
   const location = useLocation();
   
   const navItems = [
-    { icon: Home, label: 'Home', path: '/farmer/home' },
-    { icon: Wrench, label: 'Tools', path: '/farmer/tools' },
+    { icon: Home, label: 'Home', path: '/buyer/home' },
+    { icon: Search, label: 'Search', path: '/buyer/search' },
     { icon: MessageCircle, label: 'Messages', path: '/messages' },
-    { icon: User, label: 'Profile', path: '/farmer/profile' }
+    { icon: User, label: 'Profile', path: '/buyer/profile' }
   ];
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-agri-blue/20 shadow-lg z-30">
       <div className="flex justify-around items-center py-2">
         {navItems.map(({ icon: Icon, label, path }) => {
-          const isActive = location.pathname === path || (path === '/farmer/home' && location.pathname === '/farmer/');
+          const isActive = location.pathname === path;
           
           return (
             <NavLink
@@ -52,4 +52,4 @@ const BottomNavigation = () => {
   );
 };
 
-export default BottomNavigation;
+export default BuyerBottomNavigation;

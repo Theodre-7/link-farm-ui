@@ -47,6 +47,13 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* AgriLink color palette */
+    --agri-green: 119 36% 55%;      /* #6BB16B */
+    --agri-brown: 34 29% 48%;       /* #A47551 */
+    --agri-orange: 47 100% 78%;     /* #FFD591 */
+    --agri-blue: 184 43% 84%;       /* #A8DADC */
+    --agri-cream: 50 75% 97%;       /* #FFF8EA */
   }
 
   .dark {
@@ -111,7 +118,7 @@ All colors MUST be HSL.
   top: -8px;
   left: 12px;
   font-size: 12px;
-  color: #6BB16B;
+  color: hsl(var(--agri-green));
   background: white;
   padding: 0 4px;
 }
@@ -145,7 +152,7 @@ All colors MUST be HSL.
   position: absolute;
   bottom: 0;
   height: 3px;
-  background: #6BB16B;
+  background: hsl(var(--agri-green));
   transition: all 0.3s ease;
   border-radius: 2px 2px 0 0;
 }

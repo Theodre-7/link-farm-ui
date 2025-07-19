@@ -15,6 +15,7 @@ import FarmerProfile from "./pages/farmer/FarmerProfile";
 import BuyerHome from "./pages/buyer/BuyerHome";
 import BuyerProfile from "./pages/buyer/BuyerProfile";
 import CropDetail from "./pages/buyer/CropDetail";
+import Checkout from "./pages/Checkout";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/buyer/home" element={<BuyerHome />} />
           <Route path="/buyer/profile" element={<BuyerProfile />} />
           <Route path="/crop/:id" element={<CropDetail />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

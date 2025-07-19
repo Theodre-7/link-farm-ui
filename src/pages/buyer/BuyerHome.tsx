@@ -1,11 +1,11 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Search, MapPin, DollarSign, ShoppingCart } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
+import BuyerBottomNavigation from '@/components/BuyerBottomNavigation';
 
 interface Crop {
   id: string;
@@ -82,6 +82,7 @@ const mockCrops: Crop[] = [
 ];
 
 const BuyerHome = () => {
+  const navigate = useNavigate();
   const [searchFocused, setSearchFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -114,8 +115,12 @@ const BuyerHome = () => {
     crop.farmer.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const handleBuyNow = (cropId: string) => {
+    navigate(`/checkout?item=${cropId}`);
+  };
+
   return (
-    <div className="min-h-screen bg-agri-cream">
+    <div className="min-h-screen bg-agri-cream pb-20">
       {/* Header */}
       <div className="bg-white border-b border-agri-blue/20 shadow-sm sticky top-0 z-20">
         <div className="container mx-auto px-4 py-4">
@@ -187,7 +192,7 @@ const BuyerHome = () => {
                     
                     <div className="flex items-center gap-2 text-agri-green mb-3">
                       <DollarSign className="w-5 h-5" />
-                      <span className="font-bold text-lg">${crop.price}</span>
+                      <span className="font-bold text-lg">₹{crop.price}</span>
                       <span className="text-sm text-gray-600">/{crop.unit}</span>
                     </div>
                     
@@ -206,20 +211,18 @@ const BuyerHome = () => {
                       </Link>
                       
                       <Button 
+                        onClick={() => handleBuyNow(crop.id)}
                         className={cn(
                           "flex-1 bg-agri-green hover:bg-agri-green/90 text-white min-h-[44px]",
                           "relative overflow-hidden transition-all duration-300",
                           "hover:shadow-lg hover:shadow-agri-green/30",
-                          "active:scale-95 animate-pulse"
+                          "active:scale-95 ripple-effect"
                         )}
                       >
                         <span className="flex items-center gap-2 relative z-10">
                           <ShoppingCart className="w-4 h-4" />
                           Buy Now
                         </span>
-                        
-                        {/* Pulse animation */}
-                        <div className="absolute inset-0 bg-white/20 rounded-full scale-0 group-hover:scale-150 transition-transform duration-500" />
                       </Button>
                     </div>
                   </CardContent>
@@ -242,6 +245,8 @@ const BuyerHome = () => {
           </div>
         )}
       </div>
+
+      <BuyerBottomNavigation />
     </div>
   );
 };
